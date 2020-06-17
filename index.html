@@ -19,35 +19,39 @@
       <main class="container">
         <div class="row">
           <!-- column for  searches -->
-          <div class="col-4 bg-light">
+          <div class="col-3 bg-light">
             <form>
               <!-- Input area for searches -->
               <div class="form-group">
                 <label class="h4">Search for a City:</label>
                 <div class="row form-inline">
                   <div class="col-12">
-                    <input class="form-control" />
-                    <button class="btn btn-primary">&#128269;</button>
+                    <div class="row">
+                      <input class="form-control" />
+                      <button class="btn btn-primary">&#128269;</button>
+                    </div>
                   </div>
                 </div>
               </div>
               <!-- previous searches will populate here -->
-              <div class="card">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                  <li class="list-group-item">Previous search result</li>
-                </ul>
+              <div class="row">
+                <div class="card col-11">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                    <li class="list-group-item">Previous search result</li>
+                  </ul>
+                </div>
               </div>
             </form>
           </div>
           <!-- area for results -->
-          <div class="col-8">
+          <div class="col-9">
             <!-- the Dynamic city will go here -->
             <div class="card">
               <div class="card-body">
@@ -89,7 +93,7 @@
               </div>
               <!-- placeholder duplicates -->
               <div class="card col-sm border-light">
-                <div class="card-body text-white bg-primary ">
+                <div class="card-body text-white bg-primary">
                   <h5 class="card-title">Date</h5>
                   <p class="card-text">
                     Icon
