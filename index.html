@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>serverside-api-hmwk</title>
+    <title>Weather Dashboard</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -43,7 +43,6 @@
                     <li>
                       <button class="btn-block" id="pastSearchesBtn"></button>
                     </li>
-                    
                   </ul>
                   <!-- Previous search result -->
                 </div>
@@ -55,17 +54,12 @@
             <!-- the Dynamic city will go here -->
             <div class="card">
               <div class="card-body" id="displayCurrent">
+                <h3 class="card-text" id="currentDate"></h3>
                 <h1 class="card-title" id="currentCity"></h1>
                 <p class="card-text" id="currentTemp"></p>
                 <p class="card-text" id="currentHumidity"></p>
                 <p class="card-text" id="currentWind"></p>
-                <p class="card-text" id="uvIndex">
-                  <!-- 
-                    < 3 Green Nice
-                    < 7 Orange  Warm 
-                    > 7 Red Danger
-                     -->
-                </p>
+                <p class="card-text" id="uvIndex"></p>
               </div>
             </div>
             <!-- the 5-Day Forecast: will go here -->
@@ -78,8 +72,8 @@
               <!-- First card -->
               <div class="card col-sm border-light">
                 <div class="card-body text-white bg-primary col-12">
-                  <h5 class="card-title col-12">8/16</h5>
-                  <p class="card-text">
+                  <h5 class="card-title col-12" id="dayOne">Day1</h5>
+                  <p class="card-text" id="day1icon">
                     Icon
                   </p>
                   <p class="card-text">
@@ -93,7 +87,7 @@
               <!-- placeholder duplicates -->
               <div class="card col-sm border-light">
                 <div class="card-body text-white bg-primary">
-                  <h5 class="card-title">Date</h5>
+                  <h5 class="card-title" id="dayTwo">Day 2</h5>
                   <p class="card-text">
                     Icon
                   </p>
@@ -107,7 +101,7 @@
               </div>
               <div class="card col-sm border-light">
                 <div class="card-body text-white bg-primary">
-                  <h5 class="card-title">Date</h5>
+                  <h5 class="card-title" id="dayThree">Day 3</h5>
                   <p class="card-text">
                     Weather icon
                   </p>
@@ -121,7 +115,7 @@
               </div>
               <div class="card col-sm border-light">
                 <div class="card-body text-white bg-primary">
-                  <h5 class="card-title">Date</h5>
+                  <h5 class="card-title" id="dayFour">Day4</h5>
                   <p class="card-text">
                     Weather icon
                   </p>
@@ -135,7 +129,7 @@
               </div>
               <div class="card col-sm border-light">
                 <div class="card-body text-white bg-primary">
-                  <h5 class="card-title">Date</h5>
+                  <h5 class="card-title" id="dayFive">Day5</h5>
                   <p class="card-text">
                     Weather icon
                   </p>
@@ -170,5 +164,6 @@
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"
   ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="./assets/logic.js"></script>
 </html>

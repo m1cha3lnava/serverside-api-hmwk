@@ -1,0 +1,17 @@
+.favorable {
+  background-color: forestgreen;
+  color: whitesmoke;
+  text-align: center;
+}
+
+.moderate {
+  background-color: yellow;
+  color: black;
+  text-align: center;
+}
+
+.severe {
+  background-color: red;
+  color: whitesmoke;
+  text-align: center;
+}
