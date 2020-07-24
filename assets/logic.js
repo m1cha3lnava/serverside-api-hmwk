@@ -137,7 +137,6 @@ function renderCurrent(temp, humidity, wind, uvIndex) {
   $("#currentTemp").append($("<p>Temp: " + temp + "°F</p>"));
   $("#currentHumidity").append($("<p>Humidity: " + humidity + "%</p>"));
   $("#currentWind").append($("<p>Win: " + wind + " MPH</p>"));
-  $("#pastSearchesBtn").on("click", showPreviousCity);
   $("#uvIndex").append(
     $('<p>UV Index: <span id= "numUV">' + uvIndex + "</span></p>")
   );
