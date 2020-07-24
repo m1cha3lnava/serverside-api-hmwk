@@ -68,7 +68,7 @@ function populateCity(cityName) {
       apiKey;
 
     const city = weatherResponse.name;
-    console.log(weatherResponse.weather[0]);
+    // console.log(weatherResponse);
     const currentIcon = iconURL + weatherResponse.weather[0].icon;
 
     $("#currentCity").append(
@@ -101,15 +101,31 @@ function populateCity(cityName) {
       render5Day(dayOneAPI, dayTwoAPI, dayThreeAPI, dayFourAPI, dayFiveAPI);
 
       // switch()
-      /* if (uvIndex < 4) {
-        $("#uvIndex").attr("class", "favorable");
-      } else if (uvIndex > 4 && uvIndex < 7) {
-        $("#uvIndex").attr("class", "moderate");
-      } else {
-        $("#uvIndex").attr("class", "severe");
-      } */
+      
     });
   }); /* end of ajax */
+}
+
+function resetCurrentDayCard() {
+  if ("#displayCurrent" !== null) {
+    $("#displayCurrent").empty();
+    $("#displayCurrent").append(
+      $('<h3 class="card-text" id="currentDate"></h3>')
+    );
+    $("#displayCurrent").append(
+      $('<h1 class="card-title" id="currentCity"></h1>')
+    );
+    $("#displayCurrent").append(
+      $('<p class="card-text" id="currentTemp"></p>')
+    );
+    $("#displayCurrent").append(
+      $('<p class="card-text" id="currentHumidity"></p>')
+    );
+    $("#displayCurrent").append(
+      $('<p class="card-text" id="currentWind"></p>')
+    );
+    $("#displayCurrent").append($('<p class="card-text" id="uvIndex"></p>'));
+  }
 }
 
 function renderCurrent(temp, humidity, wind, uvIndex) {
@@ -117,10 +133,23 @@ function renderCurrent(temp, humidity, wind, uvIndex) {
   $("#currentHumidity").append($("<p>Humidity: " + humidity + "%</p>"));
   $("#currentWind").append($("<p>Win: " + wind + " MPH</p>"));
   $("#pastSearchesBtn").on("click", showPreviousCity);
-  $("#uvIndex").append(
-    $('<p>UV Index: <span class= "favorable">' + uvIndex + "</span></p>")
-  );
+  $("#uvIndex").append($('<p>UV Index: <span id= "numUV">' + uvIndex + "</span></p>"));
+
+  if (uvIndex < 4) {
+    $("#numUV").addClass("favorable");
+  } else if (uvIndex > 4 && uvIndex < 7) {
+    $("#numUV").addClass("moderate");
+  } else {
+    $("#numUV").addClass("severe");
+  }
 }
+
+function reset5Day() {
+  if ("#displayCurrent" !== null) {
+    $("#displayCurrent").empty();
+  }
+}
+
 function render5Day(dayOneAPI, dayTwoAPI, dayThreeAPI, dayFourAPI, dayFiveAPI) {
   const dayOneIconCode = dayOneAPI.weather[0].icon;
   const dayOneIconURL = iconURL + dayOneIconCode + ".png";
@@ -171,6 +200,7 @@ function render5Day(dayOneAPI, dayTwoAPI, dayThreeAPI, dayFourAPI, dayFiveAPI) {
 /* creating the api call url */
 $(".btn").on("click", function (event) {
   event.preventDefault();
+  resetCurrentDayCard();
   var cityName = $("#newSearchInput").val();
   // console.log(cityName);
   pastSearches.push(cityName);
