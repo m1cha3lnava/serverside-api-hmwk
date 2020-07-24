@@ -30,12 +30,18 @@ function fiveDayDates() {
 var pastSearches = localStorage.getItem("pastSearches")
   ? JSON.parse(localStorage.getItem("pastSearches"))
   : [];
-function buttonCreate() {
+function prevSearchBtn() {
   $("#pastSearchesBtn").empty();
   for (var i = 0; i < pastSearches.length; i++) {
-    var newButton = $("<button>").text(pastSearches[i]);
-    $("#pastSearchesBtn").append(newButton);
+    var pastButton = $("<button>").text(pastSearches[i]);
+    $("#pastSearchesUL").prepend('<li id="pastSearch' + i + '"></li>');
+    $("#pastSearch" + i).prepend(pastButton);
   }
+}
+function newSearchedBtn(cityName){
+    var newButton = $("<button>").text(cityName);
+    $("#pastSearchesUL").prepend('<li id="pastSearch' + pastSearches.length +'"></li>');
+    $("#pastSearch" + pastSearches.length).prepend(newButton);
 }
 
 function showPreviousCity() {
@@ -202,15 +208,22 @@ $(".btn").on("click", function (event) {
   event.preventDefault();
   resetCurrentDayCard();
   var cityName = $("#newSearchInput").val();
-  // console.log(cityName);
-  pastSearches.push(cityName);
-  localStorage.setItem("pastSearches", JSON.stringify(pastSearches));
-  populateCity(cityName);
-  buttonCreate();
-  //  console.log("search button click");
+  $("#newSearchInput").remove();
+  $("#searchBar").prepend('<input class="form-control" id="newSearchInput" />');
+
+  console.log({ cityName });
+  if (cityName === "") {
+    return;
+  } else {
+    pastSearches.push(cityName);
+    localStorage.setItem("pastSearches", JSON.stringify(pastSearches));
+    populateCity(cityName);
+    newSearchedBtn(cityName);
+    //  console.log("search button click");
+  }
 });
 
-buttonCreate();
+prevSearchBtn();
 /* Storage
 f4bbf7147a555098803bbd3eb95abe19 works
 error 401

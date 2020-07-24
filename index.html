@@ -27,7 +27,7 @@
                 <label class="h4">Search for a City:</label>
                 <div class="row form-inline">
                   <div class="col-12">
-                    <div class="row">
+                    <div class="row" id= searchBar>
                       <input class="form-control" id="newSearchInput" />
                       <button class="btn btn-primary" id="searchButton">
                         &#128269;
@@ -38,12 +38,9 @@
               </div>
               <!-- previous searches will populate here -->
               <div class="row">
-                <div class="card col-11">
+                <div class="card col-12">
                   <!--  previous searches list -->
-                  <ul class="list-group-item list-unstyled">
-                    <li>
-                      <button class="btn-block" id="pastSearchesBtn"></button>
-                    </li>
+                  <ul class="list-group-item list-unstyled" id="pastSearchesUL">
                   </ul>
                   <!-- Previous search result -->
                 </div>
