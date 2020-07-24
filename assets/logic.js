@@ -1,10 +1,10 @@
 /* console.log("Hello World"); */
-var currentDate = moment().format("M/D");
+const currentDate = moment().format("(M/D)");
 // console.log(currentDate);
-$("#currentDate").append($("<h3>" + currentDate + "</h3>"));
-renderFiveDay();
+fiveDayDates();
+let iconURL = "http://openweathermap.org/img/wn/";
 
-function renderFiveDay() {
+function fiveDayDates() {
   let dayOne = moment().add(1, "days");
   dayOne = dayOne.format("M/D");
   let dayTwo = moment().add(2, "days");
@@ -15,16 +15,16 @@ function renderFiveDay() {
   dayFour = dayFour.format("M/D");
   let dayFive = moment().add(5, "days");
   dayFive = dayFive.format("M/D");
-  $("#dayOne").empty();
-  $("#dayOne").append($("<h5>" + dayOne + "</h5>"));
-  $("#dayTwo").empty();
-  $("#dayTwo").append($("<h5>" + dayTwo + "</h5>"));
-  $("#dayThree").empty();
-  $("#dayThree").append($("<h5>" + dayThree + "</h5>"));
-  $("#dayFour").empty();
-  $("#dayFour").append($("<h5>" + dayFour + "</h5>"));
-  $("#dayFive").empty();
-  $("#dayFive").append($("<h5>" + dayFive + "</h5>"));
+  $("#dayOneTitle").empty();
+  $("#dayOneTitle").append($("<h5>" + dayOne + "</h5>"));
+  $("#dayTwoTitle").empty();
+  $("#dayTwoTitle").append($("<h5>" + dayTwo + "</h5>"));
+  $("#dayThreeTitle").empty();
+  $("#dayThreeTitle").append($("<h5>" + dayThree + "</h5>"));
+  $("#dayFourTitle").empty();
+  $("#dayFourTitle").append($("<h5>" + dayFour + "</h5>"));
+  $("#dayFiveTitle").empty();
+  $("#dayFiveTitle").append($("<h5>" + dayFive + "</h5>"));
 }
 
 var pastSearches = localStorage.getItem("pastSearches")
@@ -42,6 +42,7 @@ function showPreviousCity() {
   // console.log(this.innerHTML);
   populateCity(this.innerHTML);
 }
+
 function populateCity(cityName) {
   $("#pastSearches").empty();
   var apiKey = "f4bbf7147a555098803bbd3eb95abe19";
@@ -67,14 +68,38 @@ function populateCity(cityName) {
       apiKey;
 
     const city = weatherResponse.name;
-    $("#currentCity").append($("<h1>" + city + "</h1>"));
+    console.log(weatherResponse.weather[0]);
+    const currentIcon = iconURL + weatherResponse.weather[0].icon;
+
+    $("#currentCity").append(
+      $(
+        "<h1>" +
+          city +
+          currentDate +
+          "<img src=" +
+          currentIcon +
+          "@2x.png></h1>"
+      )
+    );
 
     $.ajax({
       url: oneCall,
       method: "GET",
     }).then(function (oneCallResponse) {
-      console.log(oneCallResponse);
-      let uvIndex = oneCallResponse.current.uvi;
+      // console.log(oneCallResponse)
+      const uvIndex = oneCallResponse.current.uvi;
+      const temp = oneCallResponse.current.temp;
+      const humidity = oneCallResponse.current.humidity;
+      const wind = oneCallResponse.current.wind_speed;
+      const dayOneAPI = oneCallResponse.daily[1];
+      const dayTwoAPI = oneCallResponse.daily[2];
+      const dayThreeAPI = oneCallResponse.daily[3];
+      const dayFourAPI = oneCallResponse.daily[4];
+      const dayFiveAPI = oneCallResponse.daily[5];
+
+      renderCurrent(temp, humidity, wind, uvIndex);
+      render5Day(dayOneAPI, dayTwoAPI, dayThreeAPI, dayFourAPI, dayFiveAPI);
+
       // switch()
       /* if (uvIndex < 4) {
         $("#uvIndex").attr("class", "favorable");
@@ -83,26 +108,69 @@ function populateCity(cityName) {
       } else {
         $("#uvIndex").attr("class", "severe");
       } */
-      const temp = oneCallResponse.current.temp;
-      const humidity = oneCallResponse.current.humidity;
-      const wind = oneCallResponse.current.speed;
-      $("#currentTemp").append($("<p>Temp: " + temp + "°F</p>"));
-      $("#currentHumidity").append($("<p>Humidity: " + humidity + "</p>"));
-      $("#currentWind").append($("<p>Win: " + wind + " MPH</p>"));
-      $("#pastSearchesBtn").on("click", showPreviousCity);
-      $("#uvIndex").append(
-        $('<p>UV Index: <span class= "favorable">' + uvIndex + "</span></p>")
-      );
     });
   }); /* end of ajax */
+}
+
+function renderCurrent(temp, humidity, wind, uvIndex) {
+  $("#currentTemp").append($("<p>Temp: " + temp + "°F</p>"));
+  $("#currentHumidity").append($("<p>Humidity: " + humidity + "%</p>"));
+  $("#currentWind").append($("<p>Win: " + wind + " MPH</p>"));
+  $("#pastSearchesBtn").on("click", showPreviousCity);
+  $("#uvIndex").append(
+    $('<p>UV Index: <span class= "favorable">' + uvIndex + "</span></p>")
+  );
+}
+function render5Day(dayOneAPI, dayTwoAPI, dayThreeAPI, dayFourAPI, dayFiveAPI) {
+  const dayOneIconCode = dayOneAPI.weather[0].icon;
+  const dayOneIconURL = iconURL + dayOneIconCode + ".png";
+  const dayOneTemp = dayOneAPI.temp.day;
+  const dayOneHumid = dayOneAPI.humidity;
+
+  const dayTwoIconCode = dayTwoAPI.weather[0].icon;
+  const dayTwoIconURL = iconURL + dayTwoIconCode + ".png";
+  const dayTwoTemp = dayTwoAPI.temp.day;
+  const dayTwoHumid = dayTwoAPI.humidity;
+
+  const dayThreeIconCode = dayThreeAPI.weather[0].icon;
+  const dayThreeIconURL = iconURL + dayThreeIconCode + ".png";
+  const dayThreeTemp = dayThreeAPI.temp.day;
+  const dayThreeHumid = dayThreeAPI.humidity;
+
+  const dayFourIconCode = dayFourAPI.weather[0].icon;
+  const dayFourIconURL = iconURL + dayFourIconCode + ".png";
+  const dayFourTemp = dayFourAPI.temp.day;
+  const dayFourHumid = dayFourAPI.humidity;
+
+  const dayFiveIconCode = dayFiveAPI.weather[0].icon;
+  const dayFiveIconURL = iconURL + dayFiveIconCode + ".png";
+  const dayFiveTemp = dayFiveAPI.temp.day;
+  const dayFiveHumid = dayFiveAPI.humidity;
+
+  $("#dayOneBody").append($("<img src=" + dayOneIconURL + ">"));
+  $("#dayOneBody").append($("<p>Temp: " + dayOneTemp + "°F</p>"));
+  $("#dayOneBody").append($("<p>Humidity: " + dayOneHumid + "%</p>"));
+
+  $("#dayTwoBody").append($("<img src=" + dayTwoIconURL + ">"));
+  $("#dayTwoBody").append($("<p>Temp: " + dayTwoTemp + "°F</p>"));
+  $("#dayTwoBody").append($("<p>Humidity: " + dayTwoHumid + "%</p>"));
+
+  $("#dayThreeBody").append($("<img src=" + dayThreeIconURL + ">"));
+  $("#dayThreeBody").append($("<p>Temp: " + dayThreeTemp + "°F</p>"));
+  $("#dayThreeBody").append($("<p>Humidity: " + dayThreeHumid + "%</p>"));
+
+  $("#dayFourBody").append($("<img src=" + dayFourIconURL + ">"));
+  $("#dayFourBody").append($("<p>Temp: " + dayFourTemp + "°F</p>"));
+  $("#dayFourBody").append($("<p>Humidity: " + dayFourHumid + "%</p>"));
+
+  $("#dayFiveBody").append($("<img src=" + dayFiveIconURL + ">"));
+  $("#dayFiveBody").append($("<p>Temp: " + dayFiveTemp + "°F</p>"));
+  $("#dayFiveBody").append($("<p>Humidity: " + dayFiveHumid + "%</p>"));
 }
 
 /* creating the api call url */
 $(".btn").on("click", function (event) {
   event.preventDefault();
-  /*   if ("#displayCurrent" !== null) {
-    $("#displayCurrent").empty();
-  } */
   var cityName = $("#newSearchInput").val();
   // console.log(cityName);
   pastSearches.push(cityName);
